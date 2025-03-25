@@ -3,40 +3,69 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        // useMaterial3: false,
-        primarySwatch: Colors.blue,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Card en Columna 1284'),
+          backgroundColor: Color(0xffb591e1),
+        ),
+        body: Center(
+          child: MyCard(),
+        ),
       ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});  
+class MyCard extends StatelessWidget {
+  final List<Map<String, String>> datos = [
+    {"etiqueta": "Dato 1", "valor": "Valor 1"},
+    {"etiqueta": "Dato 2", "valor": "Valor 2"},
+    {"etiqueta": "Dato 3", "valor": "Valor 3"},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
+    return Card(
+      elevation: 5,
+      child: Container(
+        width: 200, // Ancho reducido para mejor aspecto en columna
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Color(0xfff58dd4),
+          borderRadius: BorderRadius.circular(15.0),
         ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: datos.map((dato) => _buildDato(dato)).toList(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDato(Map<String, String> dato) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            dato["etiqueta"]!,
+            style: TextStyle(fontSize: 14.0, color: Colors.black),
+          ),
+          SizedBox(height: 4),
+          Text(
+            dato["valor"]!,
+            style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ),
+        ],
       ),
     );
   }
